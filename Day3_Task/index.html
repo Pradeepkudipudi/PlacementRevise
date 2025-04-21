@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- <input type="text" name="" id=""> -->
+<div style="display: flex ; flex-direction: row; gap: 40px;">
+    
+    <button   id="new">Add new</button>
+    <button id="show">Show users</button>
+    <button id="rem">Remove</button>
+<div id="div"></div>
+</div>
+
+
+<script>
+
+
+
+//console.log(obj)
+
+
+let Add = document.getElementById("new")
+let Show = document.getElementById("show")
+let Remove = document.getElementById("rem")
+let div = document.getElementById("div")
+
+
+var AddingUsers = []
+
+Add.addEventListener("click",(e)=>{
+
+    const obj = {}
+
+
+    let names = prompt("enter a name")
+let  email = prompt("enter a email")
+
+
+obj["name"] = names
+obj ["email"] =  email
+  
+
+    AddingUsers.push(obj)
+
+
+
+
+})
+
+
+Remove.addEventListener("click",(e)=>{
+
+obj = {}
+
+console.log(obj)
+})
+
+
+Show.addEventListener("click",(e)=>{
+    console.log(AddingUsers)
+AddingUsers.map((item)=>{
+
+    div.innerHTML = `
+    
+    <h1>${item.name}</h1>
+    <h1>${item.email}</h1>
+    `
+
+})
+
+
+})
+
+
+
+
+
+
+</script>
+    
+<!-- 
+
+    Day 3 Task 
+�
+� Task: User Profile Manager (Web-based Interactive Task) - 
+This task will cover the following concepts: 
+• DOM & its Methods: Manipulating HTML elements (getElementById, 
+querySelector, innerText, setAttribute) 
+• BOM & its Methods: Interacting with browser properties (window.alert, 
+window.location, setTimeout) 
+• Array Methods: map, filter, forEach, push 
+• String Methods: toUpperCase, toLowerCase, trim, includes 
+• Object Methods: keys, values, entries, hasOwnProperty 
+�
+� Sample Interaction & Output: 
+User clicks "Add New User" button 
+(Prompt appears) Enter user name: John 
+(Alert appears) User added successfully! 
+(User list updates) 
+1. JOHN (john@example.com) 
+User clicks "Show Users" button 
+(User list in console) 
+Users: [ { id: 1, name: 'JOHN', email: 'john@example.com' } ] 
+User clicks "Clear Users" button 
+(Alert appears) All users cleared! 
+(User list is now empty) 
+
+
+
+ -->
+
+
+</body>
+</html>
