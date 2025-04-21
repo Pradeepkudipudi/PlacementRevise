@@ -43,31 +43,33 @@ const obj =[ {
 
 
 
-// let storage  = function(){
+let storage  = function(){
     
-//   if(this.salary>45000){
+  if(this.salary>45000){
 
-//     console.log(`${this.name} earns ${this.salary} got a bonus of ${this.bonus}`)
-//   }
+    console.log(`${this.name} earns ${this.salary} got a bonus of ${this.bonus}`)
+  }
 
-//     }
+    }
+
+    total = obj.reduce((acc,value)=>{
+        if(value.salary>45000){
+        summ=  acc + value.salary*0.1
+        }
+        return summ
+        },0)
     
     
-// obj.map((val)=>{
+obj.map((val)=>{
 
-//     val["bonus"] = val.salary*0.1
-// storage.call(val)
-
-
-// })
+    val["bonus"] = val.salary*0.1
+storage.call(val)
 
 
-// total = obj.reduce((acc,value)=>{
-// if(value.salary>45000){
-// summ=  acc + value.salary*0.1
-// }
-// return summ
-// },0)
+})
+
+console.log(`total bonus are given ${total}`)
+
 
 
 
@@ -102,7 +104,7 @@ const obj =[ {
 // storer.call(obj)
 
 
-// console.log(`total bonus are given ${total}`)
+
 
 
 
