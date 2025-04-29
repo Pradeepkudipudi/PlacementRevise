@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Todo App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: #4caf50;
+      color: white;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #fff;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li button {
+      margin-left: 10px;
+      background-color: #007bff;
+    }
+
+    li button:hover {
+      background-color: #0056b3;
+    }
+
+    li button:nth-child(2) {
+      background-color: #f44336;
+    }
+
+    li button:nth-child(2):hover {
+      background-color: #d32f2f;
+    }
+
+    #lgout {
+      background-color: #ff9800;
+      margin-top: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #lgout:hover {
+      background-color: #e68900;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Hi <span id="wish"></span></h1>
+
+  <form id="form">
+    <input type="text" id="inp" placeholder="Enter your task..." />
+    <button id="add">Add</button>
+  </form>
+
+  <ul id="ul"></ul>
+  <button id="lgout">Logout</button>
+
+  <script>
+    const addBtn = document.getElementById("add");
+    const ul = document.getElementById("ul");
+    const inp = document.getElementById("inp");
+    const form = document.getElementById("form");
+
+    let LogedUser = JSON.parse(localStorage.getItem("LogedUser"));
+    document.getElementById("wish").textContent = LogedUser.username;
+
+    const key = "data_" + LogedUser.username;
+    let arr = JSON.parse(localStorage.getItem(key)) || [];
+
+    function render() {
+      ul.innerHTML = "";
+
+      arr.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "Edit";
+
+        const dltBtn = document.createElement("button");
+        dltBtn.textContent = "Delete";
+
+        editBtn.addEventListener("click", () => {
+          const newText = prompt("Edit item:", item);
+          if (newText && newText.trim()) {
+            arr[index] = newText.trim();
+            localStorage.setItem(key, JSON.stringify(arr));
+            render();
+          }
+        });
+
+        dltBtn.addEventListener("click", () => {
+          arr.splice(index, 1);
+          localStorage.setItem(key, JSON.stringify(arr));
+          render();
+        });
+
+        li.appendChild(editBtn);
+        li.appendChild(dltBtn);
+        ul.appendChild(li);
+      });
+    }
+
+    render();
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const value = inp.value.trim();
+      if (value) {
+        arr.push(value);
+        localStorage.setItem(key, JSON.stringify(arr));
+        inp.value = "";
+        render();
+      }
+    });
+
+    document.getElementById("lgout").addEventListener("click", () => {
+      localStorage.removeItem("LogedUser");
+      window.location.href = "./loginPage.html";
+    });
+  </script>
+
+</body>
+</html>

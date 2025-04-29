@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather App</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #00bcd4;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    #form {
+      background-color: #ffffffcc;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    #form input {
+      height: 45px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 0 15px;
+      font-size: 16px;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    #form input:focus {
+      border-color: #00bcd4;
+    }
+
+    #form button {
+      height: 45px;
+      background-color: #00bcd4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    #form button:hover {
+      background-color: #0097a7;
+    }
+
+    #div {
+      margin-top: 20px;
+      background-color: #ffffffcc;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      padding: 25px;
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="form">
+    <input type="text" id="inp1" placeholder="Enter city name" />
+    <button type="submit">Search Weather</button>
+  </form>
+
+  <div id="div"></div>
+
+  <script>
+    const input = document.getElementById("inp1");
+    const div = document.getElementById("div");
+    const form = document.getElementById("form");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const city = input.value.trim();
+
+      if (city === "") {
+        div.innerHTML = "⚠️ Please enter a city name";
+      } else {
+        try {
+          const weather = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=4df193dad162784c4db21b9fb5a9dc53`
+          );
+          const data = await weather.json();
+
+          if (data.cod == 200) {
+            div.innerHTML = `
+              <h2>${data.name}, ${data.sys.country}</h2>
+              <p>🌡 Temperature: <strong>${data.main.temp}°C</strong></p>
+              <p>🌥 Condition: <strong>${data.weather[0].description}</strong></p>
+              <p>💨 Wind Speed: <strong>${data.wind.speed} m/s</strong></p>
+            `;
+          } else {
+            div.innerHTML = "❌ No city found. Try again.";
+          }
+        } catch (error) {
+          console.log(error);
+          div.innerHTML = "🚨 Something went wrong. Please try again.";
+        }
+      }
+    });
+  </script>
+</body>
+</html>

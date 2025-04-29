@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <form action="" id="form">
+    <input type="text" id="inp" name="" id="">
+    <button type="submit">search</button>
+
+
+    </form>
+<div id="div"></div>
+
+
+    <script>
+
+let inp = document.getElementById("inp")
+const form = document.getElementById("form")
+let div  = document.getElementById("div")
+
+
+
+form.addEventListener("submit",async (e)=>{
+    e.preventDefault()
+
+
+
+    let city = inp.value 
+
+    if(city==""){
+        console.log('you must enter a city')
+    }else{
+
+
+        let fetchData = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=4df193dad162784c4db21b9fb5a9dc53`)
+         
+        const data = await fetchData.json()
+
+        console.log(data)
+
+      
+
+        div.innerHTML = `
+        <h1> ${data.name}</h1>
+        <h2>temp : ${data.main.temp} </h2>
+        <h2>weather report : ${data.weather[0].description}</h2>
+        `
+
+   
+    }
+
+})
+
+    </script>
+</body>
+</html>

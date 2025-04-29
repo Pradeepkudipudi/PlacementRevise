@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form action="" id="form">
+
+        <input type="text" name="" id="inp1">
+        <button type="submit">Add</button>
+        
+    </form>
+
+    <ul id="ul"></ul>
+<!-- 
+    <div id="div"></div>
+     -->
+
+
+
+    <script>
+  let inp = document.getElementById('inp1')
+  let ul = document.getElementById('ul')
+  let div2 = document.getElementById('div')
+// let form  = document.getElementById('form')
+// let dlt = document.getElementById('dlt')
+
+form.addEventListener('submit',(e)=>{
+
+    e.preventDefault()
+
+if(inp.value!==''){
+    
+    let li = document.createElement('li')
+const dltbtn = document.createElement('button')
+dltbtn.style.marginLeft = '10px'
+const edit = document.createElement('button')
+edit.textContent = 'edit'
+edit.style.marginLeft = '5px'
+
+
+dltbtn.textContent = 'Delete'
+    let list = inp.value 
+
+ 
+
+
+li.textContent = `${list}`
+
+
+dltbtn.addEventListener('click',()=>{
+    li.remove()
+})
+
+edit.addEventListener('click',()=>{
+   NEWtodo = prompt('edit ur input',li.firstChild.textContent)
+   li.firstChild.textContent = NEWtodo
+
+})
+
+li.appendChild(edit)    
+li.appendChild(dltbtn)
+ul.append(li)
+
+inp.value = ''
+
+}
+
+})
+
+
+
+
+  
+
+    </script>
+    
+</body>
+</html>
